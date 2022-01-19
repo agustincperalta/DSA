@@ -2,20 +2,21 @@ package academy.learnprogramming;
 
 import java.util.Random;
 
-import static academy.learnprogramming.algorithms.Sorting.selectionSort;
+import static academy.learnprogramming.algorithms.Sorting.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Random random = new Random();
-        int[] intArray = random.ints(5, -50, 50).toArray();
+        int[] intArray = random.ints(10, -50, 50).toArray();
         System.out.println("Unsorted array: ");
         printArray(intArray);
         System.out.println();
 
-//        bubbleSort(intArray);
+        bubbleSort(intArray);
         selectionSort(intArray);
+        insertionSort(intArray);
         System.out.println("Sorted array: ");
         printArray(intArray);
     }

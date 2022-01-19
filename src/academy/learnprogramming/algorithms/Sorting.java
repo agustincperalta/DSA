@@ -1,6 +1,6 @@
 package academy.learnprogramming.algorithms;
 
-import academy.learnprogramming.utils.Utils;
+import static academy.learnprogramming.utils.Utils.swap;
 
 public class Sorting {
 
@@ -12,10 +12,10 @@ public class Sorting {
      * @param array array to be sorted
      */
     public static void bubbleSort(int[] array) {
-        for (int u = array.length - 1; u > 0; u--) {
-            for (int i = 0; i < u; i++) {
-                if (array[i] > array[i + 1]) {
-                    Utils.swap(array, i, i + 1);
+        for (int i = array.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (array[j] > array[j + 1]) {
+                    swap(array, j, j + 1);
                 }
             }
         }
@@ -25,18 +25,35 @@ public class Sorting {
      * Implementation of Selection Sort Algorithm
      * Unstable Sort
      *
-     * @param array array to be sorted
+     * @param a array to be sorted
      */
-    public static void selectionSort(int[] array) {
-        for (int u = array.length - 1; u > 0; u--) {
-            int largest = 0;
-            for (int i = 0; i <= u; i++) {
-                if (array[i] > array[largest]) {
-                    largest = i;
+    public static void selectionSort(int[] a) {
+        for (int i = a.length - 1; i > 0; i--) {
+            int l = 0;
+            for (int j = 0; j <= i; j++) {
+                if (a[j] > a[l]) {
+                    l = j;
                 }
             }
-            Utils.swap(array, u, largest);
+            swap(a, i, l);
         }
     }
 
+    /**
+     * Implements insertion sort algorithm
+     *
+     * @param a array to be sorted
+     */
+    public static void insertionSort(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            int k = a[i];
+            int j = i - 1;
+            while (j >= 0 && a[j] > k) {
+                a[j + 1] = a[j];
+                j--;
+            }
+            a[j + 1] = k;
+        }
+
+    }
 }
