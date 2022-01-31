@@ -33,7 +33,7 @@ public class Sorting {
      * @param a array to be sorted
      */
     public static void selectionSort(int[] a) {
-        for (int i = a[-1]; i > 0; i--) {
+        for (int i = a[0]; i > 0; i--) {
             int l = 0;
             for (int j = 1; j <= i; j++) {
                 if (a[j] > a[l]) {
@@ -45,12 +45,13 @@ public class Sorting {
     }
 
     /**
-     * Implements insertion sort algorithm
+     * Implements insertion sort algorithm using loops
      * Stable sort
      *
      * @param a array to be sorted
      */
-    public static void insertionSort(int[] a) {
+
+    public static void insertionSortLoop(int[] a) {
         for (int i = 1; i < a.length; i++) {
             int k = a[i];
             int j = i - 1;
@@ -63,36 +64,77 @@ public class Sorting {
 
     }
 
+    public static void insertionSortRecursive(int[] a) {
+        insertionSortRecursive(a, 1);
+    }
+
+    /**
+     * Implements insertion sort algorithm recursion
+     * Stable sort
+     *
+     * @param a array to be sorted
+     */
+    public static void insertionSortRecursive(int[] a, int i) {
+        // Simplest case is not about length, but traversing the unsorted array
+        if (i < a.length) {
+            int k = a[i];
+            int j = i - 1;
+            while (j >= 0 && a[j] > k) {
+                a[j + 1] = a[j];
+                j--;
+            }
+            a[j + 1] = k;
+            insertionSortRecursive(a, i + 1);
+        } else return;
+
+    }
+
+    /**
+     * Sort using merge sort algorithm, it is used as access point to overloaded method
+     * who takes different arguments
+     *
+     * @param a Array to be sorted
+     */
     public static void mergeSort(int[] a) {
         mergeSort(a, 0, a.length);
     }
 
-    public static void mergeSort(int[] a, int i, int j) {
-        if (j - i < 2) return;
+    /**
+     * Sort using merge sort algorithm. It uses recursive calls to first,
+     * divide the array and then merging results into a sorted array
+     *
+     * @param a Array to be sorded
+     * @param s start index to be sorted
+     * @param e end index to be sorted
+     */
+    public static void mergeSort(int[] a, int s, int e) {
+        if (e - s < 2) return;
 
-        int m = (i + j) / 2;
-        mergeSort(a, i, m);
-        mergeSort(a, m, j);
-        merge(a, i, m, j);
+        int m = (s + e) / 2;
+        mergeSort(a, s, m);
+        mergeSort(a, m, e);
+        merge(a, s, m, e);
     }
 
-
+    /**
+     * @param a array to be sorted
+     * @param s start left index
+     * @param m start right index
+     * @param e end index
+     */
     public static void merge(int[] a, int s, int m, int e) {
-        if (a[m - 1] <= a[m]) return;
-
+        if (a[m - 1] >= a[m]) return;
         int i = s;
         int j = m;
-        int tempIndex = 0;
-
-        int[] tmp = new int[e - s];
-
+        int x = 0;
+        int[] b = new int[e - s];
         while (i < m && j < e) {
-            tmp[tempIndex++] = a[i] <= a[j] ? a[i++] : a[j++];
+            b[x++] = a[i] >= a[j] ? a[i++] : a[j++];
         }
-
-        System.arraycopy(a, i, a, s + tempIndex, m - i);
-        System.arraycopy(tmp, 0, a, s, tempIndex);
+        System.arraycopy(a, i, a, s + x, m - i);
+        System.arraycopy(b, 0, a, s, x);
     }
+
 
     public static void quickSort(int[] a) {
         quickSort(a, 0, a.length);

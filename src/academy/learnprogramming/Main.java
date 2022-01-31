@@ -1,8 +1,8 @@
 package academy.learnprogramming;
 
-import java.util.Random;
+import academy.learnprogramming.algorithms.Sorting;
 
-import static academy.learnprogramming.algorithms.Sorting.quickSort;
+import java.util.Random;
 
 public class Main {
 
@@ -12,13 +12,10 @@ public class Main {
         System.out.println("Unsorted array: ");
         printArray(intArray);
         System.out.println();
-//        bubbleSort(intArray);
-//        selectionSort(intArray);
-//        insertionSort(intArray);
-        quickSort(intArray);
-//        long inicio = System.currentTimeMillis();
-//        mergeSort(intArray);
-//        long fin = System.currentTimeMillis();
+
+//        Sorting.mergeSort(intArray);
+        Sorting.insertionSortRecursive(intArray);
+
         System.out.println("Sorted array: ");
         printArray(intArray);
 
