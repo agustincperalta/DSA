@@ -85,7 +85,7 @@ public class Sorting {
             }
             a[j + 1] = k;
             insertionSortRecursive(a, i + 1);
-        } else return;
+        }
 
     }
 
@@ -167,6 +167,56 @@ public class Sorting {
         a[j] = p;
         return j;
     }
+////// CHALLENGE 3 Sort strings with radix sort
 
+
+    public static void radixSort(String[] input, int radix, int width) {
+        // Recorre cada elemento del array desde el valor mas a la derecha
+        // en cada elemento se llama al proceso de ordenamiento de un solo digito
+        for (int i = width; i > 0; i--) {
+            radixSingleSort(input, i, radix);
+        }
+    }
+
+    public static void radixSingleSort(String[] input, int position, int radix) {
+
+        // Creamos el array para contar los elementos con la longitud de la base (radix)
+        int[] countArray = new int[radix];
+
+        // Recuperamos la letra con charAt en la posicion mas a la derecha -1 (0 index based)
+        // y le restamos el rango del codigo regresado (97 - 122) que corresponde a los numeros
+        // de unicode para letras minusculas.
+        // Contamos dentro countArray las coincidencias
+        for (String value : input) {
+            countArray[value.charAt(position - 1) - 97]++;
+        }
+        // Hace el ajuste del array para llevar el conteo de elementos anteriores
+        // Esto nos ayudará para que al aplicar counting sort sea
+        // estable
+        for (int j = 1; j < radix; j++) {
+            countArray[j] += countArray[j - 1];
+        }
+        // Guardamos en una variable los elementos que vamos a ordenar
+        // del array original
+        int numItems = input.length;
+        String[] temp = new String[numItems];
+
+        // Recorremos tempIndex que tiene la misma longitud de nuestro array
+        // original, para ir ordenando los elementos con el array de conteo
+        // ajustado, empezando de derecha a izquierda
+        for (int tempIndex = numItems - 1; tempIndex >= 0; tempIndex--) {
+            temp[--countArray[input[tempIndex].charAt(position - 1) - 97]] = input[tempIndex];
+        }
+        // Copiamos el nuevo orden del array temp dentro del array original para esta
+        // iteración
+        for (int i = 0; i < numItems; i++) {
+            input[i] = temp[i];
+        }
+
+
+    }
 
 }
+
+
+
